@@ -28,7 +28,7 @@ def build(target):
     subprocess.call(
         f"npm install && npm run build", shell=True)
     subprocess.call(
-        f'docker-compose stop {target} && docker-compose rm {target}', shell=True)
+        f'docker-compose stop {target} && docker-compose rm -f {target}', shell=True)
     subprocess.call(
         f'docker rmi solhedge-fe_{target}', shell=True)
     subprocess.call(

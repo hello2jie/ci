@@ -27,7 +27,7 @@ def build(target):
     subprocess.call(
         f"/home/alex/workspace/install/apache-maven-3.8.1/bin/mvn clean package", shell=True)
     subprocess.call(
-        f'docker-compose stop {target} && docker-compose rm {target}', shell=True)
+        f'docker-compose stop {target} && docker-compose rm -f {target}', shell=True)
     subprocess.call(
         f'docker rmi solhedge-be_{target}', shell=True)
     subprocess.call(
