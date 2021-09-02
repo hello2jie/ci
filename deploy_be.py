@@ -34,7 +34,7 @@ def clean():
     os.makedirs(PROJECT_DIR)
 
 
-def deploy_fe(tag, target):
+def deploy_be(tag, target):
     try:
         clean()
         prepare(tag)
@@ -44,4 +44,4 @@ def deploy_fe(tag, target):
 
 
 if __name__ == '__main__':
-    deploy_fe('v1.0.2', 'backend-dev')
+    deploy_be('v1.0.2', 'backend-dev')
