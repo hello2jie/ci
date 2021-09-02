@@ -10,8 +10,8 @@ REPO_URL = "git@github.com:0xalexbai/solhedge-be.git"
 PROJECT_DIR = '/home/alex/deploy/solhedge-be'
 # 编译生成路径
 DIST_DIR = os.path.join(PROJECT_DIR, 'dist')
-BACKEND_TEST_SERVICE = 'backend-test'
-BACKEND_DEV_SERVICE = 'backend-dev'
+BACKEND_TEST_SERVICE = 'solhedge-server'
+BACKEND_DEV_SERVICE = 'solhedge-server'
 
 
 def prepare(tag):
