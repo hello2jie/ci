@@ -1,7 +1,7 @@
 import os
 import logging
 
-log_dir_path = os.path.join(os.path.dirname(__file__), os.path.pardir)
+log_dir_path = os.path.dirname(__file__)
 
 log_level = logging.DEBUG
 
