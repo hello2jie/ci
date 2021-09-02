@@ -3,6 +3,8 @@ import os
 import subprocess
 import shutil
 from logger import logger
+import time
+
 
 # Repo
 REPO_URL = "git@github.com:0xalexbai/solhedge-be.git"
@@ -33,6 +35,7 @@ def clean():
     if os.path.isdir(PROJECT_DIR):
         shutil.rmtree(PROJECT_DIR)
     os.makedirs(PROJECT_DIR)
+    time.sleep(2)
 
 
 def deploy_be(tag, branch):

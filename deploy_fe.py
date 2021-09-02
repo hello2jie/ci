@@ -2,6 +2,7 @@ import git
 import os
 import subprocess
 import shutil
+import time
 from logger import logger
 
 WEB_DEV_SERVICE = 'web-dev'
@@ -35,6 +36,7 @@ def clean():
     if os.path.isdir(PROJECT_DIR):
         shutil.rmtree(PROJECT_DIR)
     os.makedirs(PROJECT_DIR)
+    time.sleep(2)
 
 
 def deploy_fe(tag, branch):
