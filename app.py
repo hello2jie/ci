@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import request
 import json
-from . import deploy_fe
+from .deploy_fe import deploy_fe
 from logger import logger
 
 # 部署地址
