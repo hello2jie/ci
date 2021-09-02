@@ -5,11 +5,6 @@ from deploy_fe import deploy_fe
 from deploy_be import deploy_be
 from logger import logger
 
-# 部署地址
-WEB_DEV_SERVICE = 'web-dev'
-WEB_TEST_SERVICE = 'web-test'
-BACKEND_TEST_SERVICE = 'backend-test'
-BACKEND_DEV_SERVICE = 'backend-dev'
 WEB_REPO_NAME = 'solhedge-fe'
 BACKEND_REPO_NAME = 'solhedge-be'
 
@@ -30,22 +25,11 @@ def webhook():
         if ref.startswith('refs/tags'):
             repo_name = payload['repository']['name']
             logger.debug(f'repo_name=>{repo_name}')
+            tag = ref.split("/")[-1]
             if repo_name == WEB_REPO_NAME:
-                tag = ref.split("/")[-1]
-                if base_ref == 'refs/heads/dev':
-                    logger.debug('start deploy web dev')
-                    deploy_fe(tag, WEB_DEV_SERVICE)
-                elif base_ref == 'refs/heads/test':
-                    logger.debug('start deploy web test')
-                    deploy_fe(tag, WEB_TEST_SERVICE)
+                deploy_fe(tag, base_ref)
             elif repo_name == BACKEND_REPO_NAME:
-                tag = ref.split("/")[-1]
-                if base_ref == 'refs/heads/dev':
-                    logger.debug('start deploy backend dev')
-                    deploy_be(tag, BACKEND_DEV_SERVICE)
-                elif base_ref == 'refs/heads/test':
-                    logger.debug('start deploy backend test')
-                    deploy_be(tag, BACKEND_TEST_SERVICE)
+                deploy_be(tag, base_ref)
         else:
             logger.debug('ignore commit')
     else:

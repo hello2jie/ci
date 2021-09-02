@@ -10,6 +10,8 @@ REPO_URL = "git@github.com:0xalexbai/solhedge-be.git"
 PROJECT_DIR = '/home/alex/deploy/solhedge-be'
 # 编译生成路径
 DIST_DIR = os.path.join(PROJECT_DIR, 'dist')
+BACKEND_TEST_SERVICE = 'backend-test'
+BACKEND_DEV_SERVICE = 'backend-dev'
 
 
 def prepare(tag):
@@ -23,7 +25,7 @@ def build(target):
     logger.debug("start build...")
     os.chdir(PROJECT_DIR)
     subprocess.call(
-        f"npm install && npm run build", shell=True)
+        f"mvn clean package", shell=True)
     subprocess.call(
         f'docker-compose -f {PROJECT_DIR}/docker-compose.yaml up --build -d {target}', shell=True)
 
@@ -34,14 +36,21 @@ def clean():
     os.makedirs(PROJECT_DIR)
 
 
-def deploy_be(tag, target):
+def deploy_be(tag, branch):
     try:
         clean()
         prepare(tag)
-        build(target)
+        if branch == 'refs/heads/dev':
+            logger.debug('start deploy backend dev')
+            build(BACKEND_DEV_SERVICE)
+        elif branch == 'refs/heads/test':
+            logger.debug('start deploy backend test')
+            build(BACKEND_TEST_SERVICE)
+        else:
+            logger.debug(f'ignore branch ==> {branch}')
     except Exception as e:
         logger.error(e)
 
 
 if __name__ == '__main__':
-    deploy_be('v1.0.2', 'backend-dev')
+    deploy_be('v1.0.2', BACKEND_DEV_SERVICE)
