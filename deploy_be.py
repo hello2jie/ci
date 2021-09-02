@@ -10,8 +10,8 @@ REPO_URL = "git@github.com:0xalexbai/solhedge-be.git"
 PROJECT_DIR = '/home/alex/deploy/solhedge-be'
 # 编译生成路径
 DIST_DIR = os.path.join(PROJECT_DIR, 'dist')
-BACKEND_TEST_SERVICE = 'solhedge-server'
-BACKEND_DEV_SERVICE = 'solhedge-server'
+BACKEND_TEST_SERVICE = 'solhedge-test-server'
+BACKEND_DEV_SERVICE = 'solhedge-dev-server'
 
 
 def prepare(tag):
@@ -53,4 +53,4 @@ def deploy_be(tag, branch):
 
 
 if __name__ == '__main__':
-    deploy_be('v0.0.1', 'refs/heads/dev')
+    deploy_be('v0.0.5', 'refs/heads/dev')
