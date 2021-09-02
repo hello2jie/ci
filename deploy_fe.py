@@ -50,7 +50,7 @@ def deploy_fe(tag, branch):
         else:
             logger.debug(f'ignore branch ==> {branch}')
     except Exception as e:
-        logger.error(e)
+        logger.exception(e)
 
 
 if __name__ == '__main__':

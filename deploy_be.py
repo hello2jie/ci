@@ -9,7 +9,6 @@ REPO_URL = "git@github.com:0xalexbai/solhedge-be.git"
 # 项目路径
 PROJECT_DIR = '/home/alex/deploy/solhedge-be'
 # 编译生成路径
-DIST_DIR = os.path.join(PROJECT_DIR, 'dist')
 BACKEND_TEST_SERVICE = 'solhedge-test-server'
 BACKEND_DEV_SERVICE = 'solhedge-dev-server'
 
@@ -49,7 +48,7 @@ def deploy_be(tag, branch):
         else:
             logger.debug(f'ignore branch ==> {branch}')
     except Exception as e:
-        logger.error(e)
+        logger.exception(e)
 
 
 if __name__ == '__main__':
