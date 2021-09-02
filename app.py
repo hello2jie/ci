@@ -22,7 +22,8 @@ def webhook():
         payload = json.loads(payload)
         ref = payload.get('ref')
         base_ref = payload.get('base_ref')
-        logger.debug(ref, base_ref)
+        logger.debug(ref)
+        logger.debug(base_ref)
         if ref.startswith('refs/tags'):
             tag = ref.split("/")[-1]
             if base_ref == 'refs/heads/dev':
