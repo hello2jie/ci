@@ -25,7 +25,7 @@ def build(target):
     logger.debug("start build...")
     os.chdir(PROJECT_DIR)
     subprocess.call(
-        f"mvn clean package", shell=True)
+        f"/home/alex/workspace/install/apache-maven-3.8.1/bin/mvn clean package", shell=True)
     subprocess.call(
         f'docker-compose -f {PROJECT_DIR}/docker-compose.yaml up --build -d {target}', shell=True)
 
