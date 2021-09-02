@@ -54,4 +54,4 @@ def deploy_fe(tag, branch):
 
 
 if __name__ == '__main__':
-    deploy_fe('v1.0.2', WEB_DEV_SERVICE)
+    deploy_fe('v1.0.2', 'refs/heads/dev')

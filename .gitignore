@@ -20,8 +20,8 @@ _mailinglist
 docs/_build/
 .vscode
 
-solhedge-be/*
-solhedge-fe/*
+solhedge-be/
+solhedge-fe/
 
 # Coverage reports
 htmlcov/

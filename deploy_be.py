@@ -53,4 +53,4 @@ def deploy_be(tag, branch):
 
 
 if __name__ == '__main__':
-    deploy_be('v1.0.2', BACKEND_DEV_SERVICE)
+    deploy_be('v0.0.1', 'refs/heads/dev')
