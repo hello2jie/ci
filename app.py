@@ -17,6 +17,7 @@ app = Flask(__name__)
 @app.route('/webhook', methods=['POST'])
 def webhook():
     payload = request.form.get('payload')
+    logger.debug(payload)
     if payload:
         payload = json.loads(payload)
         ref = payload.get('ref')
