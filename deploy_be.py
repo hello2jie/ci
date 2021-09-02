@@ -3,7 +3,6 @@ import os
 import subprocess
 import shutil
 from logger import logger
-import time
 
 
 # Repo
@@ -32,10 +31,15 @@ def build(target):
 
 
 def clean():
-    if os.path.isdir(PROJECT_DIR):
-        shutil.rmtree(PROJECT_DIR)
-    os.makedirs(PROJECT_DIR)
-    time.sleep(2)
+    for filename in os.listdir(PROJECT_DIR):
+        file_path = os.path.join(PROJECT_DIR, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            logger.error('Failed to delete %s. Reason: %s' % (file_path, e))
 
 
 def deploy_be(tag, branch):
