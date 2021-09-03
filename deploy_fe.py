@@ -3,28 +3,20 @@ import os
 import subprocess
 import shutil
 from logger import logger
-
-WEB_DEV_SERVICE = 'web-dev'
-WEB_TEST_SERVICE = 'web-test'
-
-# Repo
-REPO_URL = "git@github.com:0xalexbai/solhedge-fe.git"
-# 项目路径
-PROJECT_DIR = '/home/alex/deploy/solhedge-fe'
-# 编译生成路径
-DIST_DIR = os.path.join(PROJECT_DIR, 'dist')
+from config import WEB_REPO_URL, WEB_PROJECT_DIR, WEB_DEV_SERVICE, \
+    WEB_TEST_SERVICE, TEST_BRANCH, DEV_BRANCH
 
 
 def prepare(tag):
     logger.debug("start clone")
-    repo = git.Repo.clone_from(url=REPO_URL, to_path=PROJECT_DIR)
+    repo = git.Repo.clone_from(url=WEB_REPO_URL, to_path=WEB_PROJECT_DIR)
     repo.git.checkout(tag)
     logger.debug("pull over.")
 
 
 def build(target):
     logger.debug("start build...")
-    os.chdir(PROJECT_DIR)
+    os.chdir(WEB_PROJECT_DIR)
     subprocess.call(
         f"npm install && npm run build", shell=True)
     subprocess.call(
@@ -32,12 +24,12 @@ def build(target):
     subprocess.call(
         f'docker rmi solhedge-fe_{target}', shell=True)
     subprocess.call(
-        f'docker-compose -f {PROJECT_DIR}/docker-compose.yaml up --build -d {target}', shell=True)
+        f'docker-compose -f {WEB_PROJECT_DIR}/docker-compose.yaml up --build -d {target}', shell=True)
 
 
 def clean():
-    for filename in os.listdir(PROJECT_DIR):
-        file_path = os.path.join(PROJECT_DIR, filename)
+    for filename in os.listdir(WEB_PROJECT_DIR):
+        file_path = os.path.join(WEB_PROJECT_DIR, filename)
         try:
             if os.path.isfile(file_path) or os.path.islink(file_path):
                 os.unlink(file_path)
@@ -51,10 +43,10 @@ def deploy_fe(tag, branch):
     try:
         clean()
         prepare(tag)
-        if branch == 'refs/heads/dev':
+        if branch == DEV_BRANCH:
             logger.debug('start deploy web dev')
             build(WEB_DEV_SERVICE)
-        elif branch == 'refs/heads/test':
+        elif branch == TEST_BRANCH:
             logger.debug('start deploy web test')
             build(WEB_TEST_SERVICE)
         else:
@@ -64,4 +56,4 @@ def deploy_fe(tag, branch):
 
 
 if __name__ == '__main__':
-    deploy_fe('v1.0.2', 'refs/heads/dev')
+    deploy_fe('v1.0.2', DEV_BRANCH)

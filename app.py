@@ -4,10 +4,7 @@ import json
 from deploy_fe import deploy_fe
 from deploy_be import deploy_be
 from logger import logger
-
-WEB_REPO_NAME = 'solhedge-fe'
-BACKEND_REPO_NAME = 'solhedge-be'
-
+from config import WEB_REPO_NAME, BACKEND_REPO_NAME
 
 app = Flask(__name__)
 

@@ -3,27 +3,22 @@ import os
 import subprocess
 import shutil
 from logger import logger
-
-
-# Repo
-REPO_URL = "git@github.com:0xalexbai/solhedge-be.git"
-# 项目路径
-PROJECT_DIR = '/home/alex/deploy/solhedge-be'
-# 编译生成路径
-BACKEND_TEST_SERVICE = 'solhedge-test-server'
-BACKEND_DEV_SERVICE = 'solhedge-dev-server'
+from config import BACKEND_DEV_SERVICE, BACKEND_PROJECT_DIR, \
+    BACKEND_REPO_URL, BACKEND_TEST_SERVICE, DEV_BRANCH, \
+    TEST_BRANCH
 
 
 def prepare(tag):
     logger.debug("start clone")
-    repo = git.Repo.clone_from(url=REPO_URL, to_path=PROJECT_DIR)
+    repo = git.Repo.clone_from(
+        url=BACKEND_REPO_URL, to_path=BACKEND_PROJECT_DIR)
     repo.git.checkout(tag)
     logger.debug("pull over.")
 
 
 def build(target):
     logger.debug("start build...")
-    os.chdir(PROJECT_DIR)
+    os.chdir(BACKEND_PROJECT_DIR)
     subprocess.call(
         f"/home/alex/workspace/install/apache-maven-3.8.1/bin/mvn clean package", shell=True)
     subprocess.call(
@@ -31,12 +26,12 @@ def build(target):
     subprocess.call(
         f'docker rmi solhedge-be_{target}', shell=True)
     subprocess.call(
-        f'docker-compose -f {PROJECT_DIR}/docker-compose.yaml up --build -d {target}', shell=True)
+        f'docker-compose -f {BACKEND_PROJECT_DIR}/docker-compose.yaml up --build -d {target}', shell=True)
 
 
 def clean():
-    for filename in os.listdir(PROJECT_DIR):
-        file_path = os.path.join(PROJECT_DIR, filename)
+    for filename in os.listdir(BACKEND_PROJECT_DIR):
+        file_path = os.path.join(BACKEND_PROJECT_DIR, filename)
         try:
             if os.path.isfile(file_path) or os.path.islink(file_path):
                 os.unlink(file_path)
@@ -50,10 +45,10 @@ def deploy_be(tag, branch):
     try:
         clean()
         prepare(tag)
-        if branch == 'refs/heads/dev':
+        if branch == DEV_BRANCH:
             logger.debug('start deploy backend dev')
             build(BACKEND_DEV_SERVICE)
-        elif branch == 'refs/heads/test':
+        elif branch == TEST_BRANCH:
             logger.debug('start deploy backend test')
             build(BACKEND_TEST_SERVICE)
         else:
@@ -63,4 +58,4 @@ def deploy_be(tag, branch):
 
 
 if __name__ == '__main__':
-    deploy_be('v0.0.5', 'refs/heads/dev')
+    deploy_be('v0.0.5',  DEV_BRANCH)
