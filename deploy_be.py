@@ -14,6 +14,7 @@ def prepare(tag):
         url=BACKEND_REPO_URL, to_path=BACKEND_PROJECT_DIR)
     repo.git.checkout(tag)
     logger.debug("pull over.")
+    shutil.rmtree(os.path.join(BACKEND_PROJECT_DIR, '.git'))
 
 
 def build(target):

@@ -12,6 +12,7 @@ def prepare(tag):
     repo = git.Repo.clone_from(url=WEB_REPO_URL, to_path=WEB_PROJECT_DIR)
     repo.git.checkout(tag)
     logger.debug("pull over.")
+    shutil.rmtree(os.path.join(WEB_PROJECT_DIR, '.git'))
 
 
 def build(target):
