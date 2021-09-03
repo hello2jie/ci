@@ -5,6 +5,8 @@ TEST_BRANCH = 'refs/heads/test'
 WEB_REPO_NAME = 'solhedge-fe'
 WEB_DEV_SERVICE = 'web-dev'
 WEB_TEST_SERVICE = 'web-test'
+DEV_CONFIG = 'module.exports = config = require("@/config/config_dev")'
+TEST_CONFIG = 'module.exports = config = require("@/config/config_test")'
 
 # web Repo
 WEB_REPO_URL = "git@github.com:0xalexbai/solhedge-fe.git"

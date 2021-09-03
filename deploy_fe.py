@@ -4,7 +4,7 @@ import subprocess
 import shutil
 from logger import logger
 from config import WEB_REPO_URL, WEB_PROJECT_DIR, WEB_DEV_SERVICE, \
-    WEB_TEST_SERVICE, TEST_BRANCH, DEV_BRANCH
+    WEB_TEST_SERVICE, TEST_BRANCH, DEV_BRANCH, DEV_CONFIG, TEST_CONFIG
 
 
 def prepare(tag):
@@ -13,11 +13,15 @@ def prepare(tag):
     repo.git.checkout(tag)
     logger.debug("pull over.")
     shutil.rmtree(os.path.join(WEB_PROJECT_DIR, '.git'))
+    shutil.rmtree(os.path.join(WEB_PROJECT_DIR, '.git'))
 
 
-def build(target):
+def build(target, config_file):
     logger.debug("start build...")
     os.chdir(WEB_PROJECT_DIR)
+    CONFIG_PATH = os.path.join(WEB_PROJECT_DIR, 'src//config')
+    subprocess.call(
+        f"cp {os.path.join(CONFIG_PATH, config_file)} {os.path.join(CONFIG_PATH, 'config.js')}", shell=True)
     subprocess.call(
         f"npm install && npm run build", shell=True)
     subprocess.call(
@@ -46,10 +50,10 @@ def deploy_fe(tag, branch):
         prepare(tag)
         if branch == DEV_BRANCH:
             logger.debug('start deploy web dev')
-            build(WEB_DEV_SERVICE)
+            build(WEB_DEV_SERVICE, DEV_CONFIG)
         elif branch == TEST_BRANCH:
             logger.debug('start deploy web test')
-            build(WEB_TEST_SERVICE)
+            build(WEB_TEST_SERVICE, TEST_CONFIG)
         else:
             logger.debug(f'ignore branch ==> {branch}')
     except Exception as e:
