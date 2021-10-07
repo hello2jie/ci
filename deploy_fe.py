@@ -13,7 +13,6 @@ def prepare(tag):
     repo.git.checkout(tag)
     logger.debug("pull over.")
     shutil.rmtree(os.path.join(WEB_PROJECT_DIR, '.git'))
-    shutil.rmtree(os.path.join(WEB_PROJECT_DIR, '.git'))
 
 
 def build(target, config_file):
@@ -61,4 +60,4 @@ def deploy_fe(tag, branch):
 
 
 if __name__ == '__main__':
-    deploy_fe('v1.0.2', DEV_BRANCH)
+    deploy_fe('v0.0.2', DEV_BRANCH)
