@@ -20,7 +20,7 @@ def build(target, config_file):
     os.chdir(WEB_PROJECT_DIR)
     CONFIG_PATH = os.path.join(WEB_PROJECT_DIR, 'src//config')
     subprocess.call(
-        f"cp {os.path.join(CONFIG_PATH, config_file)} {os.path.join(CONFIG_PATH, 'config.js')}", shell=True)
+        f"cp {os.path.join(CONFIG_PATH, config_file)} {os.path.join(CONFIG_PATH, 'config.ts')}", shell=True)
     subprocess.call(
         f"npm install && npm run build", shell=True)
     subprocess.call(
