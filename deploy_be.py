@@ -25,7 +25,7 @@ def build(target):
     subprocess.call(
         f'docker-compose stop {target} && docker-compose rm -f {target}', shell=True)
     subprocess.call(
-        f'docker rmi solhedge-be_{target}', shell=True)
+        f'docker rmi solstreet-be_{target}', shell=True)
     subprocess.call(
         f'docker-compose -f {BACKEND_PROJECT_DIR}/docker-compose.yaml up --build -d {target}', shell=True)
 
