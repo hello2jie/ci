@@ -47,10 +47,10 @@ def deploy_fe(tag, branch):
     try:
         clean()
         prepare(tag)
-        if branch == DEV_BRANCH:
+        if branch.startswith(DEV_BRANCH):
             logger.debug('start deploy web dev')
             build(WEB_DEV_SERVICE, DEV_CONFIG)
-        elif branch == TEST_BRANCH:
+        elif branch.startswith(TEST_BRANCH):
             logger.debug('start deploy web test')
             build(WEB_TEST_SERVICE, TEST_CONFIG)
         else:
