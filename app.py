@@ -16,7 +16,7 @@ def webhook():
     if payload:
         payload = json.loads(payload)
         ref = payload.get('ref')
-        base_ref = payload.get('base_ref')
+        base_ref = payload.get('base_ref') or ref
         logger.debug(f'ref=>{ref}')
         logger.debug(f'base_ref=>{base_ref}')
         if ref.startswith('refs/tags'):
