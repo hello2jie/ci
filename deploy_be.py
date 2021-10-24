@@ -46,10 +46,10 @@ def deploy_be(tag, branch):
     try:
         clean()
         prepare(tag)
-        if branch.startswith(DEV_BRANCH):
+        if DEV_BRANCH in branch:
             logger.debug('start deploy backend dev')
             build(BACKEND_DEV_SERVICE)
-        elif branch.startswith(TEST_BRANCH):
+        elif TEST_BRANCH in branch:
             logger.debug('start deploy backend test')
             build(BACKEND_TEST_SERVICE)
         else:

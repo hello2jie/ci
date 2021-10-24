@@ -1,5 +1,5 @@
-DEV_BRANCH = 'refs/heads/dev'
-TEST_BRANCH = 'refs/heads/test'
+DEV_BRANCH = 'dev'
+TEST_BRANCH = 'test'
 
 # front-end
 WEB_REPO_NAME = 'solstreet-fe'
